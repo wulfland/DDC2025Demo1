@@ -345,9 +345,6 @@ class GameUI {
     }
     
     hideColumnPreview(col) {
-        if (col !== this.currentPreviewCol) return;
-        this.currentPreviewCol = null;
-        
         const cells = this.boardElement.children;
         
         for (let row = 0; row < ROWS; row++) {
