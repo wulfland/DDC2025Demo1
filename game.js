@@ -313,9 +313,9 @@ class GameUI {
     }
 
     updateUI() {
-        // Update current player indicator
+        // Update current player indicator (remove old color, add new)
         this.currentPlayerElement.classList.remove('red', 'yellow');
-        this.currentPlayerElement.classList.add('player-piece', this.engine.currentPlayer);
+        this.currentPlayerElement.classList.add(this.engine.currentPlayer);
         
         // Update scores
         this.redScoreElement.textContent = this.engine.scores.red;
