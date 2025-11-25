@@ -95,11 +95,11 @@ header h1 {
     min-height: 60px;
 }
 
-.cell:hover:not(.disabled) {
+.cell:hover:not(.cell-disabled) {
     background-color: rgba(236, 240, 241, 1);
 }
 
-.cell.disabled {
+.cell.cell-disabled {
     cursor: not-allowed;
 }
 
@@ -227,7 +227,10 @@ header h1 {
 
 /* Piece drop animation - duration will be set inline based on distance */
 .piece.drop {
-    animation: drop 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53); /* cubic ease-in for gravity */
+    /* Duration set dynamically via JavaScript based on drop distance */
+    animation-name: drop;
+    animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); /* cubic ease-in for gravity */
+    animation-fill-mode: forwards;
 }
 
 @keyframes drop {

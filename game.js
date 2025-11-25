@@ -222,12 +222,11 @@ class GameUI {
                 // Column preview on hover/touch
                 cell.addEventListener('mouseenter', () => this.showColumnPreview(col));
                 cell.addEventListener('mouseleave', () => this.hideColumnPreview(col));
-                cell.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
+                cell.addEventListener('touchstart', () => {
                     this.showColumnPreview(col);
-                });
-                cell.addEventListener('touchend', () => this.hideColumnPreview(col));
-                cell.addEventListener('touchcancel', () => this.hideColumnPreview(col));
+                }, { passive: true });
+                cell.addEventListener('touchend', () => this.hideColumnPreview(col), { passive: true });
+                cell.addEventListener('touchcancel', () => this.hideColumnPreview(col), { passive: true });
                 
                 this.boardElement.appendChild(cell);
             }
@@ -295,9 +294,11 @@ class GameUI {
         const piece = document.createElement('div');
         piece.className = `piece ${this.engine.board[row][col]} drop`;
         
-        // Calculate duration based on distance (200ms base + distance factor)
-        const distance = row + 1; // Rows from 0-5, so distance is row+1
-        const duration = Math.min(400, 200 + distance * 30); // 30ms per row
+        // Calculate duration based on drop distance
+        // row is the final landing position (0-5 from top to bottom)
+        // distance is how many rows the piece falls (row + 1)
+        const distance = row + 1;
+        const duration = Math.min(400, 200 + distance * 30); // 200ms base + 30ms per row
         piece.style.animationDuration = `${duration}ms`;
         
         cell.appendChild(piece);
@@ -373,8 +374,12 @@ class GameUI {
         }
         
         // Optional: Add haptic feedback if supported
-        if (navigator.vibrate) {
-            navigator.vibrate(100);
+        try {
+            if (navigator.vibrate && typeof navigator.vibrate === 'function') {
+                navigator.vibrate(100);
+            }
+        } catch (e) {
+            // Vibrate API not supported or failed, silently continue
         }
     }
     
@@ -388,7 +393,7 @@ class GameUI {
     }
 
     handleUndo() {
-        if (!this.engine.canUndo || this.engine.moveHistory.length === 0) return;
+        if (!this.engine.canUndo) return;
         
         const lastMove = this.engine.moveHistory[this.engine.moveHistory.length - 1];
         const { row, col } = lastMove;
@@ -482,9 +487,9 @@ class GameUI {
         const cells = this.boardElement.querySelectorAll('.cell');
         cells.forEach(cell => {
             if (this.engine.gameStatus === 'playing') {
-                cell.classList.remove('disabled');
+                cell.classList.remove('cell-disabled');
             } else {
-                cell.classList.add('disabled');
+                cell.classList.add('cell-disabled');
             }
         });
     }
