@@ -95,12 +95,90 @@ header h1 {
     min-height: 60px;
 }
 
-.cell:hover {
+.cell:hover:not(.disabled) {
     background-color: rgba(236, 240, 241, 1);
 }
 
 .cell.disabled {
     cursor: not-allowed;
+}
+
+/* Column preview - ghost piece at top */
+.cell.preview {
+    position: relative;
+}
+
+.preview-piece {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    height: 85%;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 150ms ease-out, transform 150ms ease-out;
+    pointer-events: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.preview-piece.show {
+    opacity: 0.4;
+    animation: previewFloat 150ms ease-out forwards;
+}
+
+@keyframes previewFloat {
+    from {
+        transform: translate(-50%, calc(-50% - 20px));
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%);
+        opacity: 0.4;
+    }
+}
+
+.preview-piece.red {
+    background-color: #E74C3C;
+}
+
+.preview-piece.yellow {
+    background-color: #F39C12;
+}
+
+/* Column highlight on hover */
+.cell.column-highlight {
+    background-color: rgba(236, 240, 241, 0.95);
+}
+
+/* Invalid move feedback - shake and flash */
+.cell.invalid-shake {
+    animation: invalidShake 300ms ease-in-out;
+}
+
+@keyframes invalidShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-8px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(8px);
+    }
+}
+
+.cell.invalid-flash {
+    animation: invalidFlash 300ms ease-in-out;
+}
+
+@keyframes invalidFlash {
+    0%, 100% {
+        box-shadow: 0 0 0 0 transparent;
+    }
+    50% {
+        box-shadow: 0 0 0 4px #E74C3C;
+    }
 }
 
 .piece {
@@ -120,8 +198,12 @@ header h1 {
 }
 
 .piece.winning {
-    animation: pulse 0.5s ease-in-out infinite alternate;
+    animation: winningPulse 500ms ease-in-out infinite;
     box-shadow: 0 0 20px rgba(231, 76, 60, 0.6);
+}
+
+.piece.yellow.winning {
+    box-shadow: 0 0 20px rgba(243, 156, 18, 0.6);
 }
 
 /* Accessibility: Reduce pulsing animation for users who prefer reduced motion */
@@ -130,27 +212,48 @@ header h1 {
         animation: none !important;
     }
 }
-@keyframes pulse {
-    from {
+
+/* Enhanced winning animation: scale and opacity */
+@keyframes winningPulse {
+    0%, 100% {
         transform: scale(1);
         opacity: 1;
     }
-    to {
-        transform: scale(1.1);
-        opacity: 0.8;
+    50% {
+        transform: scale(1.15);
+        opacity: 0.7;
     }
 }
 
+/* Piece drop animation - duration will be set inline based on distance */
 .piece.drop {
-    animation: drop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    animation: drop 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53); /* cubic ease-in for gravity */
 }
 
 @keyframes drop {
     from {
-        transform: translateY(-500%);
+        transform: translateY(-600%);
+        opacity: 0.8;
     }
     to {
         transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Piece removal animation for undo */
+.piece.removing {
+    animation: undoRemove 300ms ease-in forwards;
+}
+
+@keyframes undoRemove {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-200%);
+        opacity: 0;
     }
 }
 
@@ -168,6 +271,7 @@ header h1 {
     height: 32px;
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: opacity 300ms ease-in-out, transform 300ms cubic-bezier(0.68, -0.55, 0.265, 1.7);
 }
 
 .player-piece.red {
@@ -176,6 +280,22 @@ header h1 {
 
 .player-piece.yellow {
     background-color: #F39C12;
+}
+
+/* Turn transition animation */
+.player-piece.turn-transition {
+    animation: turnTransition 300ms cubic-bezier(0.68, -0.55, 0.265, 1.7);
+}
+
+@keyframes turnTransition {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 /* Controls */
@@ -244,23 +364,38 @@ header h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0);
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    animation: fadeIn 0.3s ease;
+    transition: background-color 200ms ease-out;
 }
 
 .modal.show {
     display: flex;
+    background-color: rgba(0, 0, 0, 0.7);
+    animation: fadeInBackdrop 200ms ease-out forwards;
 }
 
-@keyframes fadeIn {
+.modal.hide {
+    animation: fadeOutBackdrop 200ms ease-in forwards;
+}
+
+@keyframes fadeInBackdrop {
     from {
-        opacity: 0;
+        background-color: rgba(0, 0, 0, 0);
     }
     to {
-        opacity: 1;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+}
+
+@keyframes fadeOutBackdrop {
+    from {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    to {
+        background-color: rgba(0, 0, 0, 0);
     }
 }
 
@@ -271,18 +406,33 @@ header h1 {
     width: 90%;
     max-width: 400px;
     text-align: center;
-    animation: slideIn 0.3s ease;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    animation: modalEnter 300ms cubic-bezier(0.68, -0.55, 0.265, 1.2) forwards;
 }
 
-@keyframes slideIn {
+.modal.hide .modal-content {
+    animation: modalExit 300ms ease-in forwards;
+}
+
+@keyframes modalEnter {
     from {
-        transform: scale(0.9) translateY(-20px);
+        transform: scale(0.9);
         opacity: 0;
     }
     to {
-        transform: scale(1) translateY(0);
+        transform: scale(1);
         opacity: 1;
+    }
+}
+
+@keyframes modalExit {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(0.9);
+        opacity: 0;
     }
 }
 
