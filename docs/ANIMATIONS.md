@@ -287,7 +287,7 @@ Respects user preferences for reduced motion:
 ```
 
 ### Event Handling
-- Touch events properly handled with preventDefault
+- Touch events use passive listeners for non-blocking scroll performance
 - Mouse and touch events work together
 - Efficient event delegation
 - Cleanup of animation classes after completion
@@ -322,7 +322,7 @@ Respects user preferences for reduced motion:
 ### Optimization Techniques
 1. Use of CSS transforms over position changes
 2. GPU acceleration via transform/opacity
-3. RequestAnimationFrame for smooth timing
+3. CSS animations and setTimeout for consistent timing
 4. Minimal DOM manipulation
 5. Animation state tracking to prevent overlaps
 6. Efficient event listener management

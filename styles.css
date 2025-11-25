@@ -206,10 +206,25 @@ header h1 {
     box-shadow: 0 0 20px rgba(243, 156, 18, 0.6);
 }
 
-/* Accessibility: Reduce pulsing animation for users who prefer reduced motion */
+/* Accessibility: Reduce all animations for users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
-    .piece.winning {
+    .piece.winning,
+    .piece.drop,
+    .piece.removing,
+    .preview-piece.show,
+    .cell.invalid-shake,
+    .player-piece.turn-transition,
+    .modal.show,
+    .modal.hide,
+    .modal-content {
         animation: none !important;
+    }
+
+    /* Optionally reduce transitions to instant or very fast */
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }
 
@@ -274,7 +289,6 @@ header h1 {
     height: 32px;
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: opacity 300ms ease-in-out, transform 300ms cubic-bezier(0.68, -0.55, 0.265, 1.7);
 }
 
 .player-piece.red {
@@ -371,7 +385,6 @@ header h1 {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    transition: background-color 200ms ease-out;
 }
 
 .modal.show {
@@ -410,6 +423,9 @@ header h1 {
     max-width: 400px;
     text-align: center;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.modal.show .modal-content {
     animation: modalEnter 300ms cubic-bezier(0.68, -0.55, 0.265, 1.2) forwards;
 }
 

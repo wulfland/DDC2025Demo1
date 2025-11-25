@@ -316,6 +316,11 @@ class GameUI {
         if (!this.engine.isValidMove(col)) return;
         if (this.currentPreviewCol === col) return;
         
+        // Hide previous preview if switching columns
+        if (this.currentPreviewCol !== null && this.currentPreviewCol !== col) {
+            this.hideColumnPreview(this.currentPreviewCol);
+        }
+        
         this.currentPreviewCol = col;
         const cells = this.boardElement.children;
         
@@ -393,7 +398,9 @@ class GameUI {
     }
 
     handleUndo() {
-        if (!this.engine.canUndo) return;
+        if (!this.engine.canUndo || this.isAnimating) return;
+        
+        this.isAnimating = true;
         
         const lastMove = this.engine.moveHistory[this.engine.moveHistory.length - 1];
         const { row, col } = lastMove;
@@ -415,6 +422,7 @@ class GameUI {
                     this.updateUI();
                     this.addTurnIndicatorTransition();
                 }
+                this.isAnimating = false;
             }, 300);
         } else {
             // Fallback if no piece found
@@ -423,6 +431,7 @@ class GameUI {
                 this.updateUI();
                 this.addTurnIndicatorTransition();
             }
+            this.isAnimating = false;
         }
     }
 
