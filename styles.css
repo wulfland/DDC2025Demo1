@@ -124,6 +124,12 @@ header h1 {
     box-shadow: 0 0 20px rgba(231, 76, 60, 0.6);
 }
 
+/* Accessibility: Reduce pulsing animation for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .piece.winning {
+        animation: none !important;
+    }
+}
 @keyframes pulse {
     from {
         transform: scale(1);
