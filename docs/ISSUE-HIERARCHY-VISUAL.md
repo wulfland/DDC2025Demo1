@@ -242,18 +242,20 @@ The fastest path to completion (assuming no blockers):
 ---
 
 ## 📊 Effort Distribution
+*Approximate percentages based on estimated duration*
 
 ```
-Setup:        █ 4%
-Engine:       ████ 13%
-Controller:   ███ 8%
-UI:           ████████ 21%
-Animations:   ██████ 17%
-Responsive:   ██ 4%
-Accessibility:█████ 13%
-Polish:       █████ 13%
-Testing:      ████ 8%
-Launch:       ███ 8%
+Setup:        █ 4% (1 day)
+Engine:       ████ 13% (2-3 days)
+Controller:   ███ 9% (2 days)
+UI:           ████████ 21% (3-4 days)
+Animations:   ██████ 16% (2-3 days)
+Responsive:   ██ 4% (1 day)
+Accessibility:█████ 13% (2-3 days)
+Polish:       █████ 13% (2-3 days)
+Testing:      ████ 9% (2-3 days)
+Launch:       ███ 9% (2-3 days)
+Total: ~100% (19-26 days)
 ```
 
 ---

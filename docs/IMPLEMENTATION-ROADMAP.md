@@ -206,14 +206,14 @@ Main tracking issue for the entire project (16-24 days)
 ### All Issues at a Glance
 | Issue | Title | Phase | Priority | Est. Days |
 |-------|-------|-------|----------|-----------|
-| #3 | Epic: Connect4 Implementation | - | Critical | 16-24 |
+| #3 | Epic: Connect4 Implementation | All | Critical | 16-24 |
 | #4 | Development Environment Setup | 1 | Critical | 1 |
 | #5 | Game Logic Implementation | 2 | Critical | 2-3 |
 | #6 | Game Controller Implementation | 3 | Critical | 2 |
-| #7 | Core UI Components | 4 | Critical | 3-4 |
-| #8 | Modal Components | 4 | High | - |
-| #9 | Animation System | 5 | High | 2-3 |
-| #10 | Touch Interactions | 5 | Critical | - |
+| #7 | Core UI Components | 4 | Critical | Part of Phase 4 |
+| #8 | Modal Components | 4 | High | Part of Phase 4 |
+| #9 | Animation System | 5 | High | Part of Phase 5 |
+| #10 | Touch Interactions | 5 | Critical | Part of Phase 5 |
 | #11 | Responsive Design | 6 | High | 1 |
 | #12 | Accessibility Implementation | 7 | High | 2-3 |
 | #13 | Performance & Polish | 8 | High | 2-3 |
