@@ -107,7 +107,7 @@ header h1 {
     width: 85%;
     height: 85%;
     border-radius: 50%;
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), box-shadow 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
