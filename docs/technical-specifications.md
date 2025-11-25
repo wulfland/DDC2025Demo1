@@ -203,7 +203,13 @@ class GameEngine {
     return JSON.parse(JSON.stringify(this.board));
   }
   
-  // Remove piece from specific position
+  /**
+   * Remove piece from specific board position
+   * Used primarily for undo functionality
+   * @param row - Row index (0-5)
+   * @param column - Column index (0-6)
+   * @returns true if piece was successfully removed, false if position invalid or empty
+   */
   removePiece(row: number, column: number): boolean {
     if (!this.isInBounds(row, column)) return false;
     if (this.board[row][column].player === null) return false;
@@ -310,6 +316,12 @@ class GameController {
     this.engine.removePiece(lastMove.row, lastMove.column);
     this.state.currentPlayer = lastMove.player;
     this.state.canUndo = false;
+    // Reset game status if game was over
+    if (this.state.gameStatus !== 'playing') {
+      this.state.gameStatus = 'playing';
+      this.state.winner = null;
+      this.state.winningCells = null;
+    }
     this.updateState();
     return true;
   }

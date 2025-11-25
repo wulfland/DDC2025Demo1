@@ -243,9 +243,11 @@ This document describes the key user workflows for the Connect4 tablet game, ens
 
 **Steps:**
 1. Player taps "Restart" button
-2. Confirmation modal appears (optional):
+2. Confirmation modal appears:
    - "Restart current game?"
    - "Yes" and "No" buttons
+   - Note: Confirmation required for games with 3+ moves
+   - Games with <3 moves restart immediately (no confirmation)
 3. If "No": Modal dismisses, game continues
 4. If "Yes": 
    - System clears current board
@@ -266,7 +268,7 @@ This document describes the key user workflows for the Connect4 tablet game, ens
 - Same starting player
 - Quick execution
 
-**Alternative:** Skip confirmation if game just started (< 2 moves)
+**Note:** This smart confirmation pattern (skip for <3 moves, require for 3+ moves) prevents accidental restarts while maintaining quick access for early-game restarts.
 
 ---
 
