@@ -1,6 +1,7 @@
 // Game Constants
 const ROWS = 6;
 const COLS = 7;
+const MIN_MOVES_FOR_RESTART_CONFIRM = 3;
 const PLAYERS = {
     RED: 'red',
     YELLOW: 'yellow'
@@ -263,7 +264,7 @@ class GameUI {
     }
 
     handleRestart() {
-        if (this.engine.moveHistory.length >= 3) {
+        if (this.engine.moveHistory.length >= MIN_MOVES_FOR_RESTART_CONFIRM) {
             if (confirm('Restart current game? Progress will be lost.')) {
                 this.engine.restartGame();
                 this.renderBoard();
@@ -313,7 +314,8 @@ class GameUI {
 
     updateUI() {
         // Update current player indicator
-        this.currentPlayerElement.className = `player-piece ${this.engine.currentPlayer}`;
+        this.currentPlayerElement.classList.remove('red', 'yellow');
+        this.currentPlayerElement.classList.add('player-piece', this.engine.currentPlayer);
         
         // Update scores
         this.redScoreElement.textContent = this.engine.scores.red;
