@@ -229,8 +229,10 @@ Create a clean, intuitive, and joyful gaming experience that feels natural on a 
 
 ### Visual Accessibility
 - **High Contrast Mode:** Toggle in settings
-  - Increased contrast ratios (7:1 minimum)
-  - Bolder outlines on pieces and grid
+  - Text contrast ratio: 7:1 minimum (WCAG AAA)
+  - Piece-to-background contrast: 7:1 minimum
+  - Border contrast: 4.5:1 minimum
+  - Bolder outlines on pieces and grid (3px instead of 2px)
 - **Color-Blind Support:** Pattern overlays on pieces
   - Player 1: Diagonal stripes
   - Player 2: Dots pattern

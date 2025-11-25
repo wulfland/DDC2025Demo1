@@ -297,7 +297,8 @@ class GameController {
     }
     
     const lastMove = this.state.moveHistory.pop()!;
-    this.engine.makeMove(lastMove.column, null as any); // Remove piece
+    // Remove the piece from the board at the last move position
+    this.engine.board[lastMove.row][lastMove.column].player = null;
     this.state.currentPlayer = lastMove.player;
     this.state.canUndo = false;
     this.updateState();
@@ -542,9 +543,12 @@ describe('GameEngine', () => {
   
   test('detects full column', () => {
     const engine = new GameEngine();
+    // Fill column 0 completely with alternating pieces
     for (let i = 0; i < 6; i++) {
-      engine.makeMove(0, i % 2 === 0 ? 'red' : 'yellow');
+      const player = i % 2 === 0 ? 'red' : 'yellow';
+      engine.makeMove(0, player);
     }
+    // Column should now be full
     expect(engine.isValidMove(0)).toBe(false);
   });
   
