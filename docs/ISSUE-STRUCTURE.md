@@ -3,11 +3,28 @@
 ## Overview
 This document outlines the complete issue structure for implementing the Connect4 tablet game. Issues are organized hierarchically from Epic → Features → Tasks to help developers understand dependencies and implementation order.
 
+**Note:** This document describes the conceptual task breakdown for each feature. For actual GitHub issue links and tracking, see **[IMPLEMENTATION-ROADMAP.md](IMPLEMENTATION-ROADMAP.md)** which contains direct links to all issues.
+
+## GitHub Issues Quick Reference
+
+- **Epic Issue**: [#3](https://github.com/wulfland/DDC2025Demo1/issues/3) - Connect4 Tablet Game Implementation
+- **Phase 1**: [#4](https://github.com/wulfland/DDC2025Demo1/issues/4) - Development Environment Setup
+- **Phase 2**: [#5](https://github.com/wulfland/DDC2025Demo1/issues/5) - Game Logic Implementation
+- **Phase 3**: [#6](https://github.com/wulfland/DDC2025Demo1/issues/6) - Game Controller Implementation
+- **Phase 4**: [#7](https://github.com/wulfland/DDC2025Demo1/issues/7) Core UI, [#8](https://github.com/wulfland/DDC2025Demo1/issues/8) Modals
+- **Phase 5**: [#9](https://github.com/wulfland/DDC2025Demo1/issues/9) Animations, [#10](https://github.com/wulfland/DDC2025Demo1/issues/10) Touch
+- **Phase 6**: [#11](https://github.com/wulfland/DDC2025Demo1/issues/11) - Responsive Design
+- **Phase 7**: [#12](https://github.com/wulfland/DDC2025Demo1/issues/12) - Accessibility Implementation
+- **Phase 8**: [#13](https://github.com/wulfland/DDC2025Demo1/issues/13) - Performance & Polish
+- **Phase 9**: [#14](https://github.com/wulfland/DDC2025Demo1/issues/14) - Comprehensive Testing
+- **Phase 10**: [#15](https://github.com/wulfland/DDC2025Demo1/issues/15) - Bug Fixes & Launch Prep
+
 ## Issue Hierarchy
 
 ### 🎯 Epic: Connect4 Tablet Game Implementation
-**Parent Issue**: Main tracking issue for the entire project
-**Timeline**: 16-24 days (3-5 weeks)
+**Issue**: [#3](https://github.com/wulfland/DDC2025Demo1/issues/3)  
+**Parent Issue**: Main tracking issue for the entire project  
+**Timeline**: 16-24 days (3-5 weeks)  
 **Success Criteria**: Fully functional Connect4 game meeting all requirements
 
 ---
@@ -15,13 +32,14 @@ This document outlines the complete issue structure for implementing the Connect
 ## Phase 1: Project Setup & Architecture (1 day)
 
 ### Feature: Development Environment Setup
-**Dependencies**: None
-**Issues**:
-- [ ] #[TBD] Setup project structure (React Native/Flutter/Native)
-- [ ] #[TBD] Configure build tools and dependencies
-- [ ] #[TBD] Setup testing framework (Jest/XCTest/JUnit)
-- [ ] #[TBD] Configure linting and code quality tools
-- [ ] #[TBD] Setup CI/CD pipeline basics
+**Issue**: [#4](https://github.com/wulfland/DDC2025Demo1/issues/4)  
+**Dependencies**: None  
+**Tasks**:
+- [ ] Setup project structure (React Native/Flutter/Native)
+- [ ] Configure build tools and dependencies
+- [ ] Setup testing framework (Jest/XCTest/JUnit)
+- [ ] Configure linting and code quality tools
+- [ ] Setup CI/CD pipeline basics
 
 **Deliverables**: 
 - Runnable app skeleton
@@ -33,15 +51,16 @@ This document outlines the complete issue structure for implementing the Connect
 ## Phase 2: Core Game Engine (2-3 days)
 
 ### Feature: Game Logic Implementation
-**Dependencies**: Phase 1
-**Issues**:
-- [ ] #[TBD] Implement game board data structure (7x6 grid)
-- [ ] #[TBD] Implement piece placement logic
-- [ ] #[TBD] Implement move validation (column full check)
-- [ ] #[TBD] Implement win detection (horizontal, vertical, diagonal)
-- [ ] #[TBD] Implement draw detection
-- [ ] #[TBD] Implement game state management
-- [ ] #[TBD] Add comprehensive unit tests (>80% coverage)
+**Issue**: [#5](https://github.com/wulfland/DDC2025Demo1/issues/5)  
+**Dependencies**: #4 (Phase 1)  
+**Tasks**:
+- [ ] Implement game board data structure (7x6 grid)
+- [ ] Implement piece placement logic
+- [ ] Implement move validation (column full check)
+- [ ] Implement win detection (horizontal, vertical, diagonal)
+- [ ] Implement draw detection
+- [ ] Implement game state management
+- [ ] Add comprehensive unit tests (>80% coverage)
 
 **Deliverables**:
 - Fully functional game engine
@@ -57,16 +76,17 @@ This document outlines the complete issue structure for implementing the Connect
 ## Phase 3: Game Controller & State Management (2 days)
 
 ### Feature: Game Controller Implementation
-**Dependencies**: Phase 2
-**Issues**:
-- [ ] #[TBD] Implement GameController/ViewModel
-- [ ] #[TBD] Implement turn management system
-- [ ] #[TBD] Implement score tracking across games
-- [ ] #[TBD] Implement move history tracking
-- [ ] #[TBD] Implement undo functionality (last move only)
-- [ ] #[TBD] Implement new game / restart game logic
-- [ ] #[TBD] Implement alternating starting player logic
-- [ ] #[TBD] Add integration tests for controller
+**Issue**: [#6](https://github.com/wulfland/DDC2025Demo1/issues/6)  
+**Dependencies**: #5 (Phase 2)  
+**Tasks**:
+- [ ] Implement GameController/ViewModel
+- [ ] Implement turn management system
+- [ ] Implement score tracking across games
+- [ ] Implement move history tracking
+- [ ] Implement undo functionality (last move only)
+- [ ] Implement new game / restart game logic
+- [ ] Implement alternating starting player logic
+- [ ] Add integration tests for controller
 
 **Deliverables**:
 - Complete game state management
@@ -83,18 +103,19 @@ This document outlines the complete issue structure for implementing the Connect
 ## Phase 4: UI Components (3-4 days)
 
 ### Feature: Core UI Components
+**Issue**: [#7](https://github.com/wulfland/DDC2025Demo1/issues/7)
 **Dependencies**: Phase 2, Phase 3
-**Issues**:
-- [ ] #[TBD] Create app layout structure (header, board, controls)
-- [ ] #[TBD] Implement Header component (title, menu, settings)
-- [ ] #[TBD] Implement ScoreDisplay component
-- [ ] #[TBD] Implement TurnIndicator component
-- [ ] #[TBD] Implement GameBoard container component
-- [ ] #[TBD] Implement Cell component (with touch handling)
-- [ ] #[TBD] Implement Piece component (red/yellow circles)
-- [ ] #[TBD] Implement ColumnPreview component (ghost piece)
-- [ ] #[TBD] Implement ControlPanel component
-- [ ] #[TBD] Implement Button components (Undo, Restart, New Game)
+**Tasks**:
+- [ ] Task: Create app layout structure (header, board, controls)
+- [ ] Task: Implement Header component (title, menu, settings)
+- [ ] Task: Implement ScoreDisplay component
+- [ ] Task: Implement TurnIndicator component
+- [ ] Task: Implement GameBoard container component
+- [ ] Task: Implement Cell component (with touch handling)
+- [ ] Task: Implement Piece component (red/yellow circles)
+- [ ] Task: Implement ColumnPreview component (ghost piece)
+- [ ] Task: Implement ControlPanel component
+- [ ] Task: Implement Button components (Undo, Restart, New Game)
 
 **Deliverables**:
 - All UI components functional
@@ -113,12 +134,13 @@ This document outlines the complete issue structure for implementing the Connect
 ---
 
 ### Feature: Modal Components
+**Issue**: [#8](https://github.com/wulfland/DDC2025Demo1/issues/8)
 **Dependencies**: Phase 4 (Core UI)
-**Issues**:
-- [ ] #[TBD] Implement WinModal component
-- [ ] #[TBD] Implement DrawModal component
-- [ ] #[TBD] Implement SettingsPanel component
-- [ ] #[TBD] Implement ConfirmationDialog component (for restart)
+**Tasks**:
+- [ ] Task: Implement WinModal component
+- [ ] Task: Implement DrawModal component
+- [ ] Task: Implement SettingsPanel component
+- [ ] Task: Implement ConfirmationDialog component (for restart)
 
 **Deliverables**:
 - Modal overlays functional
@@ -130,16 +152,17 @@ This document outlines the complete issue structure for implementing the Connect
 ## Phase 5: Animations & Interactions (2-3 days)
 
 ### Feature: Animation System
+**Issue**: [#9](https://github.com/wulfland/DDC2025Demo1/issues/9)
 **Dependencies**: Phase 4
-**Issues**:
-- [ ] #[TBD] Implement piece drop animation (300-400ms)
-- [ ] #[TBD] Implement winning pieces celebration animation
-- [ ] #[TBD] Implement column preview/hover animation
-- [ ] #[TBD] Implement invalid move feedback (shake/flash)
-- [ ] #[TBD] Implement turn indicator transition
-- [ ] #[TBD] Implement modal enter/exit animations
-- [ ] #[TBD] Implement piece removal animation (for undo)
-- [ ] #[TBD] Optimize animations for 60 FPS performance
+**Tasks**:
+- [ ] Task: Implement piece drop animation (300-400ms)
+- [ ] Task: Implement winning pieces celebration animation
+- [ ] Task: Implement column preview/hover animation
+- [ ] Task: Implement invalid move feedback (shake/flash)
+- [ ] Task: Implement turn indicator transition
+- [ ] Task: Implement modal enter/exit animations
+- [ ] Task: Implement piece removal animation (for undo)
+- [ ] Task: Optimize animations for 60 FPS performance
 
 **Deliverables**:
 - Smooth 60 FPS animations
@@ -151,14 +174,15 @@ This document outlines the complete issue structure for implementing the Connect
 ---
 
 ### Feature: Touch Interactions
+**Issue**: [#10](https://github.com/wulfland/DDC2025Demo1/issues/10)
 **Dependencies**: Phase 4
-**Issues**:
-- [ ] #[TBD] Implement column tap detection
-- [ ] #[TBD] Implement column preview on touch
-- [ ] #[TBD] Implement full column feedback
-- [ ] #[TBD] Implement button press states
-- [ ] #[TBD] Add haptic feedback (iOS/Android)
-- [ ] #[TBD] Ensure 60x60px minimum touch targets
+**Tasks**:
+- [ ] Task: Implement column tap detection
+- [ ] Task: Implement column preview on touch
+- [ ] Task: Implement full column feedback
+- [ ] Task: Implement button press states
+- [ ] Task: Add haptic feedback (iOS/Android)
+- [ ] Task: Ensure 60x60px minimum touch targets
 
 **Deliverables**:
 - Responsive touch controls
@@ -170,14 +194,15 @@ This document outlines the complete issue structure for implementing the Connect
 ## Phase 6: Responsive Layout & Orientation (1 day)
 
 ### Feature: Responsive Design
+**Issue**: [#11](https://github.com/wulfland/DDC2025Demo1/issues/11)
 **Dependencies**: Phase 4
-**Issues**:
-- [ ] #[TBD] Implement landscape layout (primary)
-- [ ] #[TBD] Implement portrait layout (secondary)
-- [ ] #[TBD] Implement responsive board sizing
-- [ ] #[TBD] Handle orientation change transitions
-- [ ] #[TBD] Test on various tablet sizes (7-13 inches)
-- [ ] #[TBD] Ensure proper scaling and margins
+**Tasks**:
+- [ ] Task: Implement landscape layout (primary)
+- [ ] Task: Implement portrait layout (secondary)
+- [ ] Task: Implement responsive board sizing
+- [ ] Task: Handle orientation change transitions
+- [ ] Task: Test on various tablet sizes (7-13 inches)
+- [ ] Task: Ensure proper scaling and margins
 
 **Deliverables**:
 - Layouts work in both orientations
@@ -191,16 +216,17 @@ This document outlines the complete issue structure for implementing the Connect
 ## Phase 7: Accessibility Features (2-3 days)
 
 ### Feature: Accessibility Implementation
+**Issue**: [#12](https://github.com/wulfland/DDC2025Demo1/issues/12)
 **Dependencies**: Phase 4, Phase 5
-**Issues**:
-- [ ] #[TBD] Implement high contrast mode
-- [ ] #[TBD] Implement color-blind support (patterns on pieces)
-- [ ] #[TBD] Add screen reader support (VoiceOver/TalkBack)
-- [ ] #[TBD] Implement accessibility labels for all components
-- [ ] #[TBD] Ensure 4.5:1 minimum contrast ratio
-- [ ] #[TBD] Test with screen readers
-- [ ] #[TBD] Add haptic feedback for key interactions
-- [ ] #[TBD] Verify 60x60px touch targets
+**Tasks**:
+- [ ] Task: Implement high contrast mode
+- [ ] Task: Implement color-blind support (patterns on pieces)
+- [ ] Task: Add screen reader support (VoiceOver/TalkBack)
+- [ ] Task: Implement accessibility labels for all components
+- [ ] Task: Ensure 4.5:1 minimum contrast ratio
+- [ ] Task: Test with screen readers
+- [ ] Task: Add haptic feedback for key interactions
+- [ ] Task: Verify 60x60px touch targets
 
 **Deliverables**:
 - WCAG 2.1 AA compliance
@@ -215,15 +241,16 @@ This document outlines the complete issue structure for implementing the Connect
 ## Phase 8: Polish & Performance (2-3 days)
 
 ### Feature: Performance Optimization
+**Issue**: [#13](https://github.com/wulfland/DDC2025Demo1/issues/13)
 **Dependencies**: All previous phases
-**Issues**:
-- [ ] #[TBD] Optimize app launch time (<2 seconds)
-- [ ] #[TBD] Optimize touch response time (<50ms)
-- [ ] #[TBD] Optimize win detection (<100ms)
-- [ ] #[TBD] Optimize memory usage
-- [ ] #[TBD] Optimize animation performance (60 FPS)
-- [ ] #[TBD] Profile and fix performance bottlenecks
-- [ ] #[TBD] Reduce bundle size
+**Tasks**:
+- [ ] Task: Optimize app launch time (<2 seconds)
+- [ ] Task: Optimize touch response time (<50ms)
+- [ ] Task: Optimize win detection (<100ms)
+- [ ] Task: Optimize memory usage
+- [ ] Task: Optimize animation performance (60 FPS)
+- [ ] Task: Profile and fix performance bottlenecks
+- [ ] Task: Reduce bundle size
 
 **Deliverables**:
 - All performance targets met
@@ -239,14 +266,15 @@ This document outlines the complete issue structure for implementing the Connect
 ---
 
 ### Feature: Visual Polish
+**Issue**: Part of [#13](https://github.com/wulfland/DDC2025Demo1/issues/13)
 **Dependencies**: Phase 4, Phase 5
-**Issues**:
-- [ ] #[TBD] Refine color palette and contrast
-- [ ] #[TBD] Polish shadows and depth effects
-- [ ] #[TBD] Refine typography and spacing
-- [ ] #[TBD] Add subtle visual details
-- [ ] #[TBD] Ensure consistent visual language
-- [ ] #[TBD] Final design review against mockups
+**Tasks**:
+- [ ] Task: Refine color palette and contrast
+- [ ] Task: Polish shadows and depth effects
+- [ ] Task: Refine typography and spacing
+- [ ] Task: Add subtle visual details
+- [ ] Task: Ensure consistent visual language
+- [ ] Task: Final design review against mockups
 
 **Deliverables**:
 - Beautiful, polished UI
@@ -256,13 +284,14 @@ This document outlines the complete issue structure for implementing the Connect
 ---
 
 ### Feature: State Persistence
+**Issue**: Part of [#13](https://github.com/wulfland/DDC2025Demo1/issues/13)
 **Dependencies**: Phase 3
-**Issues**:
-- [ ] #[TBD] Implement game state save on backgrounding
-- [ ] #[TBD] Implement game state restore on foregrounding
-- [ ] #[TBD] Implement score persistence across app launches
-- [ ] #[TBD] Handle edge cases (app crash, force quit)
-- [ ] #[TBD] Test background/foreground transitions
+**Tasks**:
+- [ ] Task: Implement game state save on backgrounding
+- [ ] Task: Implement game state restore on foregrounding
+- [ ] Task: Implement score persistence across app launches
+- [ ] Task: Handle edge cases (app crash, force quit)
+- [ ] Task: Test background/foreground transitions
 
 **Deliverables**:
 - Game state preserved on backgrounding
@@ -274,17 +303,18 @@ This document outlines the complete issue structure for implementing the Connect
 ## Phase 9: Testing & Quality Assurance (2-3 days)
 
 ### Feature: Comprehensive Testing
+**Issue**: [#14](https://github.com/wulfland/DDC2025Demo1/issues/14)
 **Dependencies**: All previous phases
-**Issues**:
-- [ ] #[TBD] Write/complete unit tests for game engine
-- [ ] #[TBD] Write integration tests for game flows
-- [ ] #[TBD] Write UI tests for critical interactions
-- [ ] #[TBD] Test all user workflows (see user-workflows.md)
-- [ ] #[TBD] Test edge cases and error scenarios
-- [ ] #[TBD] Test on multiple devices and OS versions
-- [ ] #[TBD] Accessibility audit with screen readers
-- [ ] #[TBD] Performance testing and profiling
-- [ ] #[TBD] Achieve >80% code coverage
+**Tasks**:
+- [ ] Task: Write/complete unit tests for game engine
+- [ ] Task: Write integration tests for game flows
+- [ ] Task: Write UI tests for critical interactions
+- [ ] Task: Test all user workflows (see user-workflows.md)
+- [ ] Task: Test edge cases and error scenarios
+- [ ] Task: Test on multiple devices and OS versions
+- [ ] Task: Accessibility audit with screen readers
+- [ ] Task: Performance testing and profiling
+- [ ] Task: Achieve >80% code coverage
 
 **Deliverables**:
 - Comprehensive test suite
@@ -297,14 +327,15 @@ This document outlines the complete issue structure for implementing the Connect
 ---
 
 ### Feature: User Testing & Feedback
+**Issue**: Part of [#14](https://github.com/wulfland/DDC2025Demo1/issues/14)
 **Dependencies**: Phase 9 (Comprehensive Testing)
-**Issues**:
-- [ ] #[TBD] Conduct usability testing with target personas
-- [ ] #[TBD] Test with Sophia (casual player) persona
-- [ ] #[TBD] Test with Marcus (competitive player) persona
-- [ ] #[TBD] Collect and document feedback
-- [ ] #[TBD] Prioritize and fix issues from testing
-- [ ] #[TBD] Verify success metrics
+**Tasks**:
+- [ ] Task: Conduct usability testing with target personas
+- [ ] Task: Test with Sophia (casual player) persona
+- [ ] Task: Test with Marcus (competitive player) persona
+- [ ] Task: Collect and document feedback
+- [ ] Task: Prioritize and fix issues from testing
+- [ ] Task: Verify success metrics
 
 **Deliverables**:
 - User testing completed
@@ -321,13 +352,14 @@ This document outlines the complete issue structure for implementing the Connect
 ## Phase 10: Bug Fixes & Launch Prep (2-3 days)
 
 ### Feature: Bug Resolution
+**Issue**: [#15](https://github.com/wulfland/DDC2025Demo1/issues/15)
 **Dependencies**: Phase 9
-**Issues**:
-- [ ] #[TBD] Fix critical bugs from testing
-- [ ] #[TBD] Fix high-priority bugs
-- [ ] #[TBD] Fix medium-priority bugs (time permitting)
-- [ ] #[TBD] Verify all fixes with tests
-- [ ] #[TBD] Final regression testing
+**Tasks**:
+- [ ] Task: Fix critical bugs from testing
+- [ ] Task: Fix high-priority bugs
+- [ ] Task: Fix medium-priority bugs (time permitting)
+- [ ] Task: Verify all fixes with tests
+- [ ] Task: Final regression testing
 
 **Deliverables**:
 - Zero critical bugs
@@ -337,16 +369,17 @@ This document outlines the complete issue structure for implementing the Connect
 ---
 
 ### Feature: Documentation & Launch
+**Issue**: Part of [#15](https://github.com/wulfland/DDC2025Demo1/issues/15)
 **Dependencies**: All phases complete
-**Issues**:
-- [ ] #[TBD] Create app icons (all required sizes)
-- [ ] #[TBD] Create store screenshots
-- [ ] #[TBD] Write app store description
-- [ ] #[TBD] Create privacy policy
-- [ ] #[TBD] Setup crash reporting
-- [ ] #[TBD] Setup analytics (optional)
-- [ ] #[TBD] Final build and submission preparation
-- [ ] #[TBD] Create user documentation (if needed)
+**Tasks**:
+- [ ] Task: Create app icons (all required sizes)
+- [ ] Task: Create store screenshots
+- [ ] Task: Write app store description
+- [ ] Task: Create privacy policy
+- [ ] Task: Setup crash reporting
+- [ ] Task: Setup analytics (optional)
+- [ ] Task: Final build and submission preparation
+- [ ] Task: Create user documentation (if needed)
 
 **Deliverables**:
 - All store assets ready
