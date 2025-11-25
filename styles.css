@@ -220,8 +220,11 @@ header h1 {
         animation: none !important;
     }
 
-    /* Optionally reduce transitions to instant or very fast */
-    * {
+    /* Reduce transitions to instant or very fast for game elements */
+    .container *,
+    .game-board *,
+    .modal *,
+    .controls * {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;

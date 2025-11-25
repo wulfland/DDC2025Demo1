@@ -318,7 +318,9 @@ class GameUI {
         
         // Hide previous preview if switching columns
         if (this.currentPreviewCol !== null && this.currentPreviewCol !== col) {
-            this.hideColumnPreview(this.currentPreviewCol);
+            const previousCol = this.currentPreviewCol;
+            this.currentPreviewCol = null; // Clear it first so hideColumnPreview works
+            this.hideColumnPreview(previousCol);
         }
         
         this.currentPreviewCol = col;
@@ -417,22 +419,21 @@ class GameUI {
             
             // Wait for animation to complete before updating state
             setTimeout(() => {
-                if (this.engine.undoLastMove()) {
-                    this.renderBoard();
-                    this.updateUI();
-                    this.addTurnIndicatorTransition();
-                }
-                this.isAnimating = false;
+                this.completeUndo();
             }, 300);
         } else {
             // Fallback if no piece found
-            if (this.engine.undoLastMove()) {
-                this.renderBoard();
-                this.updateUI();
-                this.addTurnIndicatorTransition();
-            }
-            this.isAnimating = false;
+            this.completeUndo();
         }
+    }
+    
+    completeUndo() {
+        if (this.engine.undoLastMove()) {
+            this.renderBoard();
+            this.updateUI();
+            this.addTurnIndicatorTransition();
+        }
+        this.isAnimating = false;
     }
 
     handleRestart() {
