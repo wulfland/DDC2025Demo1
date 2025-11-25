@@ -203,7 +203,15 @@ class GameUI {
                 cell.className = 'cell';
                 cell.dataset.row = row;
                 cell.dataset.col = col;
+                cell.tabIndex = 0; // Make cell focusable
+                cell.setAttribute('role', 'button'); // Optional: improve accessibility
                 cell.addEventListener('click', () => this.handleCellClick(col));
+                cell.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        this.handleCellClick(col);
+                    }
+                });
                 this.boardElement.appendChild(cell);
             }
         }
