@@ -47,7 +47,7 @@ class GameEngine {
         if (row === null) return null;
 
         this.board[row][col] = this.currentPlayer;
-        this.moveHistory.push({ player: this.currentPlayer, row, col, timestamp: Date.now() });
+        this.moveHistory.push({ player: this.currentPlayer, row, col });
         this.canUndo = true;
 
         const winningLine = this.checkWin(row, col);
