@@ -152,7 +152,7 @@ class GameEngine {
     newGame() {
         this.board = this.createEmptyBoard();
         this.gamesPlayed++;
-        this.currentPlayer = this.gamesPlayed % 2 === 0 ? PLAYERS.RED : PLAYERS.YELLOW;
+        this.currentPlayer = this.gamesPlayed % 2 === 1 ? PLAYERS.RED : PLAYERS.YELLOW;
         this.gameStatus = 'playing';
         this.winner = null;
         this.winningCells = null;
