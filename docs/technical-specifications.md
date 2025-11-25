@@ -203,6 +203,15 @@ class GameEngine {
     return JSON.parse(JSON.stringify(this.board));
   }
   
+  // Remove piece from specific position
+  removePiece(row: number, column: number): boolean {
+    if (!this.isInBounds(row, column)) return false;
+    if (this.board[row][column].player === null) return false;
+    
+    this.board[row][column].player = null;
+    return true;
+  }
+  
   // Reset board
   reset(): void {
     this.board = this.createEmptyBoard();
@@ -298,7 +307,7 @@ class GameController {
     
     const lastMove = this.state.moveHistory.pop()!;
     // Remove the piece from the board at the last move position
-    this.engine.board[lastMove.row][lastMove.column].player = null;
+    this.engine.removePiece(lastMove.row, lastMove.column);
     this.state.currentPlayer = lastMove.player;
     this.state.canUndo = false;
     this.updateState();
