@@ -189,6 +189,7 @@ class GameUI {
         this.newGameBtn = document.getElementById('new-game-btn');
         this.winModal = document.getElementById('win-modal');
         this.drawModal = document.getElementById('draw-modal');
+        this.restartModal = document.getElementById('restart-modal');
         
         this.initBoard();
         this.bindEvents();
@@ -236,6 +237,15 @@ class GameUI {
         document.getElementById('draw-close').addEventListener('click', () => {
             this.hideModal(this.drawModal);
         });
+        document.getElementById('restart-confirm').addEventListener('click', () => {
+            this.hideModal(this.restartModal);
+            this.engine.restartGame();
+            this.renderBoard();
+            this.updateUI();
+        });
+        document.getElementById('restart-cancel').addEventListener('click', () => {
+            this.hideModal(this.restartModal);
+        });
     }
 
     handleCellClick(col) {
@@ -273,11 +283,7 @@ class GameUI {
 
     handleRestart() {
         if (this.engine.moveHistory.length >= MIN_MOVES_FOR_RESTART_CONFIRM) {
-            if (confirm('Restart current game? Progress will be lost.')) {
-                this.engine.restartGame();
-                this.renderBoard();
-                this.updateUI();
-            }
+            this.showModal(this.restartModal);
         } else {
             this.engine.restartGame();
             this.renderBoard();
