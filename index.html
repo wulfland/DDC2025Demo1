@@ -30,7 +30,9 @@
         
         <div class="turn-indicator">
             <span>Current Turn:</span>
-            <div id="current-player" class="player-piece red"></div>
+            <div id="current-player" class="player-piece red" aria-live="polite" role="status">
+                <span class="visually-hidden">Red</span>
+            </div>
             <div id="turn-announcement" aria-live="polite" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">Red's turn</div>
         </div>
         
