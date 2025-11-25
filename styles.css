@@ -326,8 +326,8 @@ header h1 {
     }
     
     .cell {
-        min-width: 44px;
-        min-height: 44px;
+        min-width: 60px;
+        min-height: 60px;
     }
     
     .controls {
