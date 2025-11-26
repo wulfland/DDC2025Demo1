@@ -5,6 +5,14 @@
     box-sizing: border-box;
 }
 
+:root {
+    --board-width: 600px;
+    --cell-size: 85px;
+    --margin-horizontal: 48px;
+    --margin-vertical: 32px;
+    --component-spacing: 24px;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
     background-color: #ECF0F1;
@@ -13,28 +21,65 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 16px;
+    padding: var(--margin-vertical) var(--margin-horizontal);
     user-select: none;
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
+    overflow: hidden;
+}
+
+/* Orientation-specific body styles */
+body.landscape {
+    --margin-horizontal: 48px;
+    --margin-vertical: 32px;
+    --component-spacing: 24px;
+}
+
+body.portrait {
+    --margin-horizontal: 32px;
+    --margin-vertical: 24px;
+    --component-spacing: 20px;
+}
+
+/* Smooth orientation transition */
+body.orientation-transitioning .container,
+body.orientation-transitioning .game-board,
+body.orientation-transitioning .controls,
+body.orientation-transitioning header,
+body.orientation-transitioning .score-display,
+body.orientation-transitioning .turn-indicator {
+    transition: all 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 24px;
+    gap: var(--component-spacing);
     width: 100%;
-    max-width: 800px;
+    max-width: 100%;
+    height: 100%;
 }
 
 /* Header */
+header {
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 header h1 {
     font-size: 36px;
     font-weight: bold;
     text-align: center;
     color: #2C3E50;
-    margin: 16px 0;
+    margin: 0;
+}
+
+/* Portrait: Smaller header */
+body.portrait header h1 {
+    font-size: 32px;
 }
 
 /* Score Display */
@@ -44,6 +89,11 @@ header h1 {
     gap: 16px;
     font-size: 28px;
     font-weight: bold;
+    min-height: 60px;
+}
+
+body.portrait .score-display {
+    font-size: 24px;
 }
 
 .score {
@@ -78,8 +128,18 @@ header h1 {
     grid-template-columns: repeat(7, 1fr);
     gap: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px;
+    width: var(--board-width);
+    max-width: 90vw;
+}
+
+/* Landscape: Board at 80% max width */
+body.landscape .game-board {
+    max-width: 80vw;
+}
+
+/* Portrait: Board at 90% max width */
+body.portrait .game-board {
+    max-width: 90vw;
 }
 
 .cell {
@@ -285,6 +345,11 @@ header h1 {
     gap: 12px;
     font-size: 20px;
     font-weight: 500;
+    min-height: 60px;
+}
+
+body.portrait .turn-indicator {
+    font-size: 18px;
 }
 
 .player-piece {
@@ -324,6 +389,31 @@ header h1 {
     gap: 16px;
     flex-wrap: wrap;
     justify-content: center;
+    min-height: 80px;
+    align-items: center;
+}
+
+/* Landscape: Single row of buttons */
+body.landscape .controls {
+    flex-direction: row;
+}
+
+/* Portrait: Two rows - Undo and Restart side by side, New Game full width below */
+body.portrait .controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 400px;
+}
+
+body.portrait .controls .btn:not(#new-game-btn) {
+    flex: 1 1 calc(50% - 8px);
+    min-width: 0;
+}
+
+body.portrait .controls #new-game-btn {
+    flex: 1 1 100%;
+    width: 100%;
 }
 
 .btn {
@@ -487,46 +577,65 @@ header h1 {
     gap: 16px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* Responsive Design - Tablet Sizes (7-13 inches) */
+
+/* Small tablets (7-8 inch): 1024x768 - 1280x800 */
+@media (min-width: 768px) and (max-width: 1024px) {
+    :root {
+        --margin-horizontal: 32px;
+        --margin-vertical: 24px;
+    }
+    
     header h1 {
-        font-size: 28px;
+        font-size: 32px;
     }
     
     .score-display {
         font-size: 24px;
     }
-    
-    .game-board {
-        max-width: 100%;
-        padding: 12px;
-        gap: 6px;
-    }
-    
-    .cell {
-        min-width: 60px;
-        min-height: 60px;
-    }
-    
-    .controls {
-        width: 100%;
-    }
-    
-    .btn {
-        flex: 1;
-        min-width: 100px;
+}
+
+/* Medium tablets (9-10 inch): 1280x800 - 1920x1200 */
+@media (min-width: 1025px) and (max-width: 1920px) {
+    :root {
+        --margin-horizontal: 40px;
+        --margin-vertical: 28px;
     }
 }
 
-/* Portrait-specific adjustments for smaller screens */
-@media (max-width: 768px) and (orientation: portrait) {
-    .controls {
-        flex-direction: column;
-        max-width: 400px;
+/* Large tablets (11-13 inch): 2048x1536 - 2732x2048 */
+@media (min-width: 1921px) {
+    :root {
+        --margin-horizontal: 48px;
+        --margin-vertical: 32px;
+    }
+    
+    header h1 {
+        font-size: 40px;
+    }
+    
+    .score-display {
+        font-size: 32px;
+    }
+}
+
+/* Specific device optimizations */
+
+/* iPad Mini (2048×1536px) */
+@media (min-width: 1536px) and (max-width: 2048px) {
+    body.landscape .game-board {
+        max-width: 75vw;
+    }
+}
+
+/* iPad Pro 11" (2388×1668px) and 12.9" (2732×2048px) */
+@media (min-width: 2048px) {
+    body.landscape .game-board {
+        max-width: 70vw;
     }
     
     .btn {
-        width: 100%;
-        min-width: auto;
+        min-width: 140px;
+        font-size: 20px;
     }
 }

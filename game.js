@@ -191,9 +191,117 @@ class GameUI {
         this.drawModal = document.getElementById('draw-modal');
         this.restartModal = document.getElementById('restart-modal');
         
+        // Orientation and responsive state
+        this.currentOrientation = this.detectOrientation();
+        this.isOrientationTransitioning = false;
+        
         this.initBoard();
         this.bindEvents();
+        this.setupOrientationListener();
+        this.updateResponsiveLayout();
         this.updateUI();
+    }
+    
+    detectOrientation() {
+        return window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
+    }
+    
+    setupOrientationListener() {
+        window.addEventListener('resize', () => {
+            const newOrientation = this.detectOrientation();
+            
+            if (newOrientation !== this.currentOrientation) {
+                this.handleOrientationChange(newOrientation);
+            } else {
+                // Just a resize, not an orientation change
+                this.updateResponsiveLayout();
+            }
+        });
+    }
+    
+    handleOrientationChange(newOrientation) {
+        // If animation is in progress, wait for it to complete
+        if (this.isAnimating) {
+            setTimeout(() => this.handleOrientationChange(newOrientation), 100);
+            return;
+        }
+        
+        this.isOrientationTransitioning = true;
+        this.currentOrientation = newOrientation;
+        
+        // Add transition class for smooth animation
+        document.body.classList.add('orientation-transitioning');
+        
+        // Update layout
+        this.updateResponsiveLayout();
+        
+        // Remove transition class after animation
+        setTimeout(() => {
+            document.body.classList.remove('orientation-transitioning');
+            this.isOrientationTransitioning = false;
+        }, 300);
+    }
+    
+    calculateBoardSize() {
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        const orientation = this.currentOrientation;
+        
+        // Layout constants
+        const margin = orientation === 'landscape' ? 48 : 32;
+        const headerHeight = 80;
+        const controlsHeight = 80;
+        const scoreHeight = 60;
+        const turnHeight = 60;
+        
+        // Available space
+        const availableWidth = screenWidth - (margin * 2);
+        const availableHeight = screenHeight - headerHeight - controlsHeight - 
+                                scoreHeight - turnHeight - (margin * 2);
+        
+        // Board dimensions (7 columns, 6 rows)
+        const aspectRatio = 7 / 6;
+        
+        // Calculate size based on constraints
+        let boardWidth = availableWidth * (orientation === 'landscape' ? 0.8 : 0.9);
+        let boardHeight = boardWidth / aspectRatio;
+        
+        // Check if height fits
+        if (boardHeight > availableHeight) {
+            boardHeight = availableHeight;
+            boardWidth = boardHeight * aspectRatio;
+        }
+        
+        // Cell size
+        const cellSize = boardWidth / 7;  // 7 columns
+        
+        // Ensure minimum touch target size
+        const minCellSize = 60;
+        if (cellSize < minCellSize) {
+            const adjustedCellSize = minCellSize;
+            boardWidth = adjustedCellSize * 7;
+            boardHeight = adjustedCellSize * 6;
+        }
+        
+        return {
+            boardWidth,
+            boardHeight,
+            cellSize: boardWidth / 7,
+            pieceSize: (boardWidth / 7) * 0.85
+        };
+    }
+    
+    updateResponsiveLayout() {
+        const size = this.calculateBoardSize();
+        const orientation = this.currentOrientation;
+        
+        // Update CSS custom properties for responsive sizing
+        document.documentElement.style.setProperty('--board-width', `${size.boardWidth}px`);
+        document.documentElement.style.setProperty('--cell-size', `${size.cellSize}px`);
+        
+        // Update body class for orientation-specific styling
+        document.body.classList.remove('landscape', 'portrait');
+        document.body.classList.add(orientation);
     }
 
     initBoard() {
