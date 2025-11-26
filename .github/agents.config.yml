@@ -1,0 +1,75 @@
+# Agent Configuration for Connect4 Game Project
+# This file defines the custom agents available for this project
+
+agents:
+  # Product Owner - prioritizes and assigns work
+  - name: po_agent
+    file: .github/agents/sm-agent.agent.md
+    description: Product Owner
+    role: management
+    expertise:
+      - Requirements prioritization
+      - Feature assignment
+      - Team coordination
+    
+  # UX Designer - handles design and requirements
+  - name: ux_agent
+    file: .github/agents/ux-agent.agent.md
+    description: UX designer and requirements engineer
+    role: design
+    expertise:
+      - User experience design
+      - Workflow documentation
+      - UI mockups and specifications
+      - User persona analysis
+  
+  # Game Developer - implements game logic and mechanics
+  - name: game_dev_agent
+    file: .github/agents/game-dev-agent.agent.md
+    description: JavaScript game developer specializing in game mechanics
+    role: development
+    expertise:
+      - JavaScript game logic
+      - Game state management
+      - Win detection algorithms
+      - Move validation
+      - Game engine implementation
+  
+  # QA/Testing Agent - ensures quality and edge case coverage
+  - name: qa_agent
+    file: .github/agents/qa-agent.agent.md
+    description: Quality assurance and testing specialist
+    role: testing
+    expertise:
+      - Game mechanics testing
+      - Edge case identification
+      - User experience validation
+      - Performance testing
+      - Accessibility testing
+  
+  # UI/Animation Agent - handles styling and animations
+  - name: ui_animation_agent
+    file: .github/agents/ui-animation-agent.agent.md
+    description: CSS expert specializing in animations and responsive design
+    role: frontend
+    expertise:
+      - CSS animations
+      - Responsive design
+      - Visual polish
+      - Touch interactions
+      - Performance optimization
+
+# Team workflow
+workflow:
+  - Product Owner (po_agent) prioritizes features
+  - UX Designer (ux_agent) creates specifications and mockups
+  - Game Developer (game_dev_agent) implements game logic
+  - UI/Animation Agent (ui_animation_agent) handles styling and animations
+  - QA Agent (qa_agent) validates quality and tests edge cases
+  
+# Project structure
+project:
+  type: tablet-game
+  technology: vanilla-javascript
+  target_platform: tablet
+  game_type: connect4
