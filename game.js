@@ -198,6 +198,9 @@ class GameUI {
 
     initBoard() {
         this.boardElement.innerHTML = '';
+        this.isAnimating = false;
+        this.currentPreviewCol = null;
+        
         for (let row = 0; row < ROWS; row++) {
             for (let col = 0; col < COLS; col++) {
                 const cell = document.createElement('div');
@@ -206,6 +209,8 @@ class GameUI {
                 cell.dataset.col = col;
                 cell.tabIndex = 0; // Make cell focusable
                 cell.setAttribute('role', 'button'); // Optional: improve accessibility
+                
+                // Click/tap handlers
                 cell.addEventListener('click', () => this.handleCellClick(col));
                 cell.addEventListener('keydown', (event) => {
                     if (event.key === 'Enter' || event.key === ' ') {
@@ -213,6 +218,16 @@ class GameUI {
                         this.handleCellClick(col);
                     }
                 });
+                
+                // Column preview on hover/touch
+                cell.addEventListener('mouseenter', () => this.showColumnPreview(col));
+                cell.addEventListener('mouseleave', () => this.hideColumnPreview(col));
+                cell.addEventListener('touchstart', () => {
+                    this.showColumnPreview(col);
+                }, { passive: true });
+                cell.addEventListener('touchend', () => this.hideColumnPreview(col), { passive: true });
+                cell.addEventListener('touchcancel', () => this.hideColumnPreview(col), { passive: true });
+                
                 this.boardElement.appendChild(cell);
             }
         }
@@ -249,12 +264,18 @@ class GameUI {
     }
 
     handleCellClick(col) {
-        if (this.engine.gameStatus !== 'playing') return;
+        if (this.engine.gameStatus !== 'playing' || this.isAnimating) return;
+
+        // Check if move is valid
+        if (!this.engine.isValidMove(col)) {
+            this.showInvalidMoveAnimation(col);
+            return;
+        }
 
         const result = this.engine.makeMove(col);
         if (result) {
+            this.hideColumnPreview(col);
             this.animatePieceDrop(result.row, result.col);
-            this.updateUI();
             
             if (this.engine.gameStatus === 'won') {
                 setTimeout(() => this.showWinModal(), 1000);
@@ -265,20 +286,151 @@ class GameUI {
     }
 
     animatePieceDrop(row, col) {
+        this.isAnimating = true;
         const cells = this.boardElement.children;
         const cellIndex = row * COLS + col;
         const cell = cells[cellIndex];
         
         const piece = document.createElement('div');
         piece.className = `piece ${this.engine.board[row][col]} drop`;
+        
+        // Calculate duration based on drop distance
+        // row is the final landing position (0-5 from top to bottom)
+        // distance is how many rows the piece falls (row + 1)
+        const distance = row + 1;
+        const duration = Math.min(400, 200 + distance * 30); // 200ms base + 30ms per row
+        piece.style.animationDuration = `${duration}ms`;
+        
         cell.appendChild(piece);
+        
+        // Update UI after animation completes
+        setTimeout(() => {
+            this.isAnimating = false;
+            this.updateUI();
+            this.addTurnIndicatorTransition();
+        }, duration);
+    }
+    
+    showColumnPreview(col) {
+        if (this.engine.gameStatus !== 'playing' || this.isAnimating) return;
+        if (!this.engine.isValidMove(col)) return;
+        if (this.currentPreviewCol === col) return;
+        
+        // Hide previous preview if switching columns
+        if (this.currentPreviewCol !== null && this.currentPreviewCol !== col) {
+            const previousCol = this.currentPreviewCol;
+            this.currentPreviewCol = null; // Clear it first so hideColumnPreview works
+            this.hideColumnPreview(previousCol);
+        }
+        
+        this.currentPreviewCol = col;
+        const cells = this.boardElement.children;
+        
+        // Show preview on top cell of the column
+        for (let row = 0; row < ROWS; row++) {
+            const cellIndex = row * COLS + col;
+            const cell = cells[cellIndex];
+            
+            if (row === 0) {
+                // Add preview piece to top cell
+                const previewPiece = document.createElement('div');
+                previewPiece.className = `preview-piece ${this.engine.currentPlayer} show`;
+                cell.appendChild(previewPiece);
+                cell.classList.add('preview');
+            }
+            
+            // Highlight entire column
+            cell.classList.add('column-highlight');
+        }
+    }
+    
+    hideColumnPreview(col) {
+        const cells = this.boardElement.children;
+        
+        for (let row = 0; row < ROWS; row++) {
+            const cellIndex = row * COLS + col;
+            const cell = cells[cellIndex];
+            
+            // Remove preview piece
+            const previewPiece = cell.querySelector('.preview-piece');
+            if (previewPiece) {
+                previewPiece.remove();
+            }
+            cell.classList.remove('preview', 'column-highlight');
+        }
+    }
+    
+    showInvalidMoveAnimation(col) {
+        const cells = this.boardElement.children;
+        
+        // Animate all cells in the column
+        for (let row = 0; row < ROWS; row++) {
+            const cellIndex = row * COLS + col;
+            const cell = cells[cellIndex];
+            
+            // Add shake and flash animations
+            cell.classList.add('invalid-shake', 'invalid-flash');
+            
+            // Remove classes after animation
+            setTimeout(() => {
+                cell.classList.remove('invalid-shake', 'invalid-flash');
+            }, 300);
+        }
+        
+        // Optional: Add haptic feedback if supported
+        try {
+            if (navigator.vibrate && typeof navigator.vibrate === 'function') {
+                navigator.vibrate(100);
+            }
+        } catch (e) {
+            // Vibrate API not supported or failed, silently continue
+        }
+    }
+    
+    addTurnIndicatorTransition() {
+        this.currentPlayerElement.classList.add('turn-transition');
+        
+        // Remove the transition class after animation completes
+        setTimeout(() => {
+            this.currentPlayerElement.classList.remove('turn-transition');
+        }, 300);
     }
 
     handleUndo() {
+        if (!this.engine.canUndo || this.isAnimating) return;
+        
+        this.isAnimating = true;
+        
+        const lastMove = this.engine.moveHistory[this.engine.moveHistory.length - 1];
+        const { row, col } = lastMove;
+        
+        // Get the cell and piece to animate
+        const cells = this.boardElement.children;
+        const cellIndex = row * COLS + col;
+        const cell = cells[cellIndex];
+        const piece = cell.querySelector('.piece');
+        
+        if (piece) {
+            // Add removal animation
+            piece.classList.add('removing');
+            
+            // Wait for animation to complete before updating state
+            setTimeout(() => {
+                this.completeUndo();
+            }, 300);
+        } else {
+            // Fallback if no piece found
+            this.completeUndo();
+        }
+    }
+    
+    completeUndo() {
         if (this.engine.undoLastMove()) {
             this.renderBoard();
             this.updateUI();
+            this.addTurnIndicatorTransition();
         }
+        this.isAnimating = false;
     }
 
     handleRestart() {
@@ -342,9 +494,9 @@ class GameUI {
         const cells = this.boardElement.querySelectorAll('.cell');
         cells.forEach(cell => {
             if (this.engine.gameStatus === 'playing') {
-                cell.classList.remove('disabled');
+                cell.classList.remove('cell-disabled');
             } else {
-                cell.classList.add('disabled');
+                cell.classList.add('cell-disabled');
             }
         });
     }
@@ -368,11 +520,21 @@ class GameUI {
     }
 
     showModal(modal) {
+        modal.style.display = 'flex';
+        // Force reflow to ensure the display change is applied before adding 'show'
+        modal.offsetHeight;
         modal.classList.add('show');
     }
 
     hideModal(modal) {
+        modal.classList.add('hide');
         modal.classList.remove('show');
+        
+        // Wait for exit animation to complete before hiding
+        setTimeout(() => {
+            modal.style.display = 'none';
+            modal.classList.remove('hide');
+        }, 300);
     }
 }
 
