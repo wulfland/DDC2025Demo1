@@ -253,11 +253,11 @@ class GameUI {
         const controlsHeight = 80;
         const scoreHeight = 60;
         const turnHeight = 60;
+        const totalVerticalSpacing = headerHeight + controlsHeight + scoreHeight + turnHeight + (margin * 2);
         
         // Available space
         const availableWidth = screenWidth - (margin * 2);
-        const availableHeight = screenHeight - headerHeight - controlsHeight - 
-                                scoreHeight - turnHeight - (margin * 2);
+        const availableHeight = screenHeight - totalVerticalSpacing;
         
         // Board dimensions (7 columns, 6 rows)
         const aspectRatio = 7 / 6;
@@ -278,9 +278,8 @@ class GameUI {
         // Ensure minimum touch target size
         const minCellSize = 60;
         if (cellSize < minCellSize) {
-            const adjustedCellSize = minCellSize;
-            boardWidth = adjustedCellSize * 7;
-            boardHeight = adjustedCellSize * 6;
+            boardWidth = minCellSize * 7;
+            boardHeight = minCellSize * 6;
         }
         
         return {
